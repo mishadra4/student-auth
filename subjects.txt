@@ -1,0 +1,2 @@
+name,lecturerUsername,groupNames
+Інформаційні телекомунікаційні технології управління,admin@gmail.com,КН-410
