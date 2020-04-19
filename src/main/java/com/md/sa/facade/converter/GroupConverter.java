@@ -1,6 +1,7 @@
 package com.md.sa.facade.converter;
 
 import com.md.sa.facade.dto.GroupData;
+import com.md.sa.facade.dto.StudentData;
 import com.md.sa.model.Groups;
 import com.md.sa.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;

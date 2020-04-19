@@ -1,5 +1,6 @@
 package com.md.sa.facade.converter;
 
+import com.md.sa.facade.dto.StudentData;
 import com.md.sa.model.Student;
 import org.springframework.stereotype.Component;
 
