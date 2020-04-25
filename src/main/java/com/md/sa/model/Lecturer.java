@@ -5,7 +5,6 @@ import java.util.List;
 
 
 @Entity(name = "lecturer")
-@Table(name = "lecturer")
 public class Lecturer extends User {
 
     @OneToMany(mappedBy = "lecturer", fetch = FetchType.LAZY)
