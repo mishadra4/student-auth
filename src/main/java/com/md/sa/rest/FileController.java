@@ -113,6 +113,7 @@ public class FileController {
             try {
 
                 List<Lecturer> lecturers = csvLoader.getLecturers(convert(file));
+                lecturers.forEach(lecturer -> lecturer.setPassword(passwordEncoder.encode(lecturer.getPassword())));
                 lecturerService.saveAll(lecturers);
                 lecturers.forEach(lecturer -> createAuthority(lecturer, LECTURER));
 
