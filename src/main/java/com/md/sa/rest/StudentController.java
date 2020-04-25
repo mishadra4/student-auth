@@ -26,7 +26,7 @@ public class StudentController {
     @RequestMapping(value = "/lecture/{lectureId}/student/{username}/enroll", method = RequestMethod.POST)
     public ResponseEntity enrollStudent(@PathVariable final int lectureId, @PathVariable final String username) {
         final Student student = studentService.getStudent(username);
-        lectureService.enrollStudent(lectureId, student);
+        lectureService.enrollStudent(lectureId, student, true);
         return ResponseEntity.ok().build();
     }
 
@@ -38,7 +38,7 @@ public class StudentController {
         if (isPresent) {
             lectureService.unEnrollStudent(lectureId, student);
         } else {
-            lectureService.enrollStudent(lectureId, student);
+            lectureService.enrollStudent(lectureId, student, false);
         }
         return ResponseEntity.ok().build();
     }
@@ -51,7 +51,7 @@ public class StudentController {
         if (isPresent) {
             labService.unEnrollStudent(labId, student);
         } else {
-            labService.enrollStudent(labId, student);
+            labService.enrollStudent(labId, student, false);
         }
         return ResponseEntity.ok().build();
     }

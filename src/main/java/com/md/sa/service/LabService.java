@@ -15,5 +15,5 @@ public interface LabService {
 
     void unEnrollStudent(int labId, Student student);
 
-    void enrollStudent(int labId, Student student);
+    void enrollStudent(int labId, Student student, boolean checkQr);
 }

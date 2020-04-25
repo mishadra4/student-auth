@@ -4,17 +4,20 @@ import com.md.sa.facade.dto.GroupData;
 import com.md.sa.facade.dto.LabData;
 import com.md.sa.model.Groups;
 import com.md.sa.model.Lab;
+import com.md.sa.model.QrCode;
 import com.md.sa.model.Student;
 import com.md.sa.service.GroupService;
 import com.md.sa.service.LecturerService;
+import com.md.sa.service.QrCodeService;
 import com.md.sa.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.apache.logging.log4j.util.Strings.EMPTY;
 
 @Component
 public class LabConverter implements GenericConverter<Lab, LabData> {
@@ -29,6 +32,8 @@ public class LabConverter implements GenericConverter<Lab, LabData> {
     private GenericConverter<Groups, GroupData> groupConverter;
     @Autowired
     private SubjectConverter subjectConverter;
+    @Autowired
+    private QrCodeService qrCodeService;
 
 
     @Override
@@ -65,21 +70,13 @@ public class LabConverter implements GenericConverter<Lab, LabData> {
         dto.setLecturerUsername(entity.getLecturer().getUsername());
 
         dto.setSubject(subjectConverter.convertToDTO(entity.getSubject()));
-        createQrCode(entity);
-        dto.setFilePath(entity.getQrCodeFilepath());
-        return dto;
-    }
 
-    private void createQrCode(Lab lab) {
-        if (lab.getQrCodeFilepath() == null || lab.getQrCodeFilepath().isEmpty()) {
-            try {
-                InetAddress inetAddress = InetAddress.getLocalHost();
-                final String lectureUrl = "http://" + inetAddress.getHostAddress() + ":4200/student/lab/" + lab.getLabId() + "/enroll";
-                lab.setQrCodeFilepath(lectureUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        final QrCode qrCode = qrCodeService.generateQrCode(entity);
+        dto.setFilePath(Optional.ofNullable(qrCode)
+                .map(QrCode::getQrCodePath)
+                .orElse(EMPTY));
+
+        return dto;
     }
 
     public LecturerService getLecturerService() {

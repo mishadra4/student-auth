@@ -3,18 +3,24 @@ package com.md.sa.facade.converter;
 import com.md.sa.facade.dto.GroupData;
 import com.md.sa.facade.dto.LectureData;
 import com.md.sa.model.Lecture;
+import com.md.sa.model.QrCode;
 import com.md.sa.model.Student;
 import com.md.sa.service.GroupService;
 import com.md.sa.service.LecturerService;
+import com.md.sa.service.QrCodeService;
 import com.md.sa.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.apache.logging.log4j.util.Strings.EMPTY;
 
 
 @Component
@@ -34,6 +40,9 @@ public class LectureConverter implements GenericConverter<Lecture, LectureData> 
 
     @Autowired
     private SubjectConverter subjectConverter;
+
+    @Autowired
+    private QrCodeService qrCodeService;
 
 
     @Override
@@ -82,22 +91,17 @@ public class LectureConverter implements GenericConverter<Lecture, LectureData> 
         dto.setLectureDate(entity.getLectureDate());
 
         dto.setSubject(subjectConverter.convertToDTO(entity.getSubject()));
-        createQrCode(entity);
-        dto.setFilePath(entity.getQrCodeFilepath());
+
+        final QrCode qrCode = qrCodeService.generateQrCode(entity);
+        dto.setFilePath(Optional.ofNullable(qrCode)
+                .map(QrCode::getQrCodePath)
+                .orElse(EMPTY));
+
+        dto.setQrCodeEndDate(Optional.ofNullable(qrCode)
+        .map(QrCode::getEndDate)
+        .orElse(LocalDateTime.now()));
 
         return dto;
-    }
-
-    private void createQrCode(Lecture lecture) {
-        if (lecture.getQrCodeFilepath() == null || lecture.getQrCodeFilepath().isEmpty()) {
-            try {
-                InetAddress inetAddress = InetAddress.getLocalHost();
-                final String lectureUrl = "http://" + inetAddress.getHostAddress() + ":4200/student/lecture/" + lecture.getLectureId() + "/enroll";
-                lecture.setQrCodeFilepath(lectureUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public LecturerService getLecturerService() {

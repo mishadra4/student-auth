@@ -1,17 +1,6 @@
 package com.md.sa.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,9 +21,6 @@ public class Lecture {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "qr_code_filepath")
-    private String qrCodeFilepath;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -57,6 +43,10 @@ public class Lecture {
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "qrcode_id", referencedColumnName = "id")
+    private QrCode qrCode;
 
     private LocalDate lectureDate;
 
@@ -132,11 +122,11 @@ public class Lecture {
         this.subject = subject;
     }
 
-    public String getQrCodeFilepath() {
-        return qrCodeFilepath;
+    public QrCode getQrCode() {
+        return qrCode;
     }
 
-    public void setQrCodeFilepath(String qrCodeFilepath) {
-        this.qrCodeFilepath = qrCodeFilepath;
+    public void setQrCode(QrCode qrCode) {
+        this.qrCode = qrCode;
     }
 }

@@ -13,7 +13,7 @@ public interface LectureService {
 
     Lecture saveLecture(Lecture lecture);
 
-    void enrollStudent(final int lectureId, final Student student);
+    void enrollStudent(final int lectureId, final Student student, boolean checkQr);
 
     void unEnrollStudent(int lectureId, Student student);
 

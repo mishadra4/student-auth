@@ -1,6 +1,11 @@
 package com.md.sa.facade.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class LectureData {
@@ -26,6 +31,10 @@ public class LectureData {
     private SubjectData subject;
 
     private LocalDate lectureDate;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
+    private LocalDateTime qrCodeEndDate;
 
 
     public LocalDate getLectureDate() {
@@ -114,5 +123,13 @@ public class LectureData {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public LocalDateTime getQrCodeEndDate() {
+        return qrCodeEndDate;
+    }
+
+    public void setQrCodeEndDate(LocalDateTime qrCodeEndDate) {
+        this.qrCodeEndDate = qrCodeEndDate;
     }
 }

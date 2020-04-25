@@ -1,14 +1,15 @@
 package com.md.sa.service.impl;
 
-import com.md.sa.repository.LabRepository;
 import com.md.sa.dao.LabDao;
 import com.md.sa.model.Lab;
 import com.md.sa.model.Student;
+import com.md.sa.repository.LabRepository;
 import com.md.sa.service.LabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,9 +45,11 @@ public class LabServiceImpl implements LabService {
     }
 
     @Override
-    public void enrollStudent(int labId, Student student) {
+    public void enrollStudent(int labId, Student student, boolean checkQr) {
         final Lab lab = getLab(labId);
-        lab.getStudents().add(student);
-        labRepository.save(lab);
+        if (!checkQr || lab.getQrCode().getEndDate().isBefore(LocalDateTime.now())) {
+            lab.getStudents().add(student);
+            labRepository.save(lab);
+        }
     }
 }

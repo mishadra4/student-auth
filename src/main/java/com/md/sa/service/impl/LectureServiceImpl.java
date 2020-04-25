@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional
@@ -29,10 +30,15 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public void enrollStudent(int lectureId, Student student) {
+    public void enrollStudent(int lectureId, Student student, boolean checkQr) {
         final Lecture lecture = getLecture(lectureId);
-        lecture.getStudents().add(student);
-        saveLecture(lecture);
+        if (!checkQr || lecture.getQrCode().getEndDate().isAfter(LocalDateTime.now())) {
+            lecture.getStudents().add(student);
+            saveLecture(lecture);
+        } else
+        {
+            throw new IllegalArgumentException("Qr code is expired");
+        }
     }
 
     @Override
