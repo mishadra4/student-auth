@@ -20,7 +20,7 @@
         <jackson.databind.version>2.5.3</jackson.databind.version>
         <json.web-token.version>0.9.1</json.web-token.version>
         <google.zxing.verion>3.3.0</google.zxing.verion>
-        <apache.poi.version>3.12</apache.poi.version>
+        <apache.poi.version>3.17</apache.poi.version>
     </properties>
 
     <dependencies>
