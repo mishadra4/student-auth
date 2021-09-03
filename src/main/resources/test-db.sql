@@ -1,3 +1,3 @@
-INSERT INTO `student_authorization`.`authorities` (`id`, `authority`) VALUES ('1', 'ADMIN');
-INSERT INTO `student_authorization`.`authorities` (`id`, `authority`) VALUES ('2', 'LECTURER');
-INSERT INTO `student_authorization`.`authorities` (`id`, `authority`) VALUES ('3', 'STUDENT');
+INSERT INTO authorities (authority) VALUES ('ADMIN');
+INSERT INTO authorities (authority) VALUES ('LECTURER');
+INSERT INTO authorities (authority) VALUES ('STUDENT');

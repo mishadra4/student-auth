@@ -1,0 +1,204 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="Petro">
+
+        <createTable tableName="group_">
+            <column name="group_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="course" type="int"/>
+            <column name="name" type="varchar(256)"/>
+        </createTable>
+
+        <createTable tableName="users">
+            <column name="username" type="varchar(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_type" type="varchar(64)"/>
+            <column name="enabled" type="boolean"/>
+            <column name="first_name" type="varchar(256)"/>
+            <column name="last_name" type="varchar(256)"/>
+            <column name="password" type="varchar(256)"/>
+            <column name="student_id" type="varchar(256)"/>
+            <column name="group_group_id" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="group_group_id"
+                                 constraintName="fk_users_to_groups"
+                                 referencedTableName="group_"
+                                 referencedColumnNames="group_id"
+                                 onDelete="SET NULL"/>
+
+        <createTable tableName="authorities">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="authority" type="varchar(256)"/>
+        </createTable>
+
+        <createTable tableName="user_authority_mapping">
+            <column name="user_id" type="varchar(256)"/>
+            <column name="authority_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_authority_mapping"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_authority_mappings_to_users"
+                                 referencedTableName="users"
+                                 referencedColumnNames="username"/>
+
+        <addForeignKeyConstraint baseTableName="user_authority_mapping"
+                                 baseColumnNames="authority_id"
+                                 constraintName="fk_user_authority_mappings_to_authorities"
+                                 referencedTableName="authorities"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="qrcode">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="enddate" type="timestamp without timezone"/>
+            <column name="qrcodepath" type="varchar(256)"/>
+        </createTable>
+
+        <createTable tableName="subject">
+            <column name="subject_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(256)"/>
+            <column name="lecturer_username" type="varchar(256)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="subject"
+                                 baseColumnNames="lecturer_username"
+                                 constraintName="fk_subjects_to_users"
+                                 referencedTableName="users"
+                                 referencedColumnNames="username"
+                                 onDelete="SET NULL"/>
+
+        <createTable tableName="subject_group_mapping">
+            <column name="subject_id" type="int"/>
+            <column name="group_id" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="subject_group_mapping"
+                                 baseColumnNames="subject_id"
+                                 constraintName="fk_subject_group_mappings_to_subjects"
+                                 referencedTableName="subject"
+                                 referencedColumnNames="subject_id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="subject_group_mapping"
+                                 baseColumnNames="group_id"
+                                 constraintName="fk_subject_group_mappings_to_groups"
+                                 referencedTableName="group_"
+                                 referencedColumnNames="group_id"
+                                 onDelete="CASCADE"/>
+
+        <createTable tableName="lecture">
+            <column name="lecture_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(256)"/>
+            <column name="lecturedate" type="date"/>
+            <column name="name" type="varchar(512)"/>
+            <column name="ordinal_number" type="int"/>
+            <column name="lecturer_id" type="varchar(256)">
+                <constraints foreignKeyName="fk_lectures_to_lecturers" references="users(username)"/>
+            </column>
+            <column name="qrcode_id" type="bigint">
+                <constraints foreignKeyName="fk_lectures_to_qrcodes" references="qrcode(id)"/>
+            </column>
+            <column name="subject_id" type="int">
+                <constraints foreignKeyName="fk_lectures_to_subjects"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="lab">
+            <column name="lab_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(2048)"/>
+            <column name="labdate" type="date"/>
+            <column name="name" type="varchar(512)"/>
+            <column name="ordinal_number" type="int"/>
+            <column name="group_id" type="int">
+                <constraints nullable="true" foreignKeyName="fk_labs_to_groups" references="group_(group_id)"/>
+            </column>
+            <column name="lecturer_id" type="varchar(256)">
+                <constraints nullable="true" foreignKeyName="fk_labs_to_lecturers" references="users(username)"/>
+            </column>
+            <column name="qrcode_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_labs_to_qrcodes" references="qrcode(id)"/>
+            </column>
+            <column name="subject_id" type="int">
+                <constraints nullable="true" foreignKeyName="fk_labs_to_subjects" references="subject(subject_id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="lab_student_mapping">
+            <column name="lab_id" type="int"/>
+            <column name="username" type="varchar(256)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="lab_student_mapping"
+                                 baseColumnNames="lab_id"
+                                 constraintName="fk_lab_student_mappings_to_labs"
+                                 referencedTableName="lab"
+                                 referencedColumnNames="lab_id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="lab_student_mapping"
+                                 baseColumnNames="username"
+                                 constraintName="fk_lab_student_mappings_to_students"
+                                 referencedTableName="users"
+                                 referencedColumnNames="username"
+                                 onDelete="CASCADE"/>
+
+        <createTable tableName="lecture_student_mapping">
+            <column name="lecture_id" type="int"/>
+            <column name="username" type="varchar(256)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="lecture_student_mapping"
+                                 baseColumnNames="lecture_id"
+                                 constraintName="fk_lecture_student_mappings_to_lectures"
+                                 referencedTableName="lecture"
+                                 referencedColumnNames="lecture_id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="lecture_student_mapping"
+                                 baseColumnNames="username"
+                                 constraintName="fk_lecture_student_mappings_to_students"
+                                 referencedTableName="users"
+                                 referencedColumnNames="username"
+                                 onDelete="CASCADE"/>
+
+        <createTable tableName="lecture_group_mapping">
+            <column name="lecture_id" type="int"/>
+            <column name="group_id" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="lecture_group_mapping"
+                                 baseColumnNames="lecture_id"
+                                 constraintName="fk_lecture_group_mappings_to_lectures"
+                                 referencedTableName="lecture"
+                                 referencedColumnNames="lecture_id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="lecture_group_mapping"
+                                 baseColumnNames="group_id"
+                                 constraintName="fk_lecture_group_mappings_to_groups"
+                                 referencedTableName="group_"
+                                 referencedColumnNames="group_id"
+                                 onDelete="CASCADE"/>
+
+        <sqlFile path="test-db.sql"/>
+
+    </changeSet>
+
+</databaseChangeLog>
