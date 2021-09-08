@@ -28,6 +28,8 @@ public class QrCodeServiceImpl implements QrCodeService {
 
     @Value("${qrcode.active.time.minutes}")
     private Integer activeMinutes;
+    @Value("${qr-code.client.url}")
+    private String clientUrl;
 
     @Override
     public QrCode generateQrCode(Lecture lecture) {
@@ -46,7 +48,7 @@ public class QrCodeServiceImpl implements QrCodeService {
 
     private QrCode createQrCode(Lecture lecture) {
         if (lecture.getQrCode() == null || isEmpty(lecture.getQrCode().getQrCodePath())) {
-            final String lectureUrl = "student/lecture/" + lecture.getLectureId() + "/enroll";
+            final String lectureUrl = clientUrl + "student/lecture/" + lecture.getLectureId() + "/enroll";
             final QrCode qrCode = new QrCode();
             qrCode.setQrCodePath(lectureUrl);
             qrCode.setEndDate(LocalDateTime.now().plusMinutes(activeMinutes));
@@ -60,7 +62,7 @@ public class QrCodeServiceImpl implements QrCodeService {
 
     private QrCode createQrCode(Lab lab) {
         if (lab.getQrCode() == null || isEmpty(lab.getQrCode().getQrCodePath())) {
-            final String lectureUrl = "student/lab/" + lab.getLabId() + "/enroll";
+            final String lectureUrl = clientUrl + "student/lab/" + lab.getLabId() + "/enroll";
             final QrCode qrCode = new QrCode();
             qrCode.setQrCodePath(lectureUrl);
             entityManager.merge(qrCode);

@@ -1,3 +1,3 @@
 firstName,lastName,username,password,enabled
-Anton,Vasylenko,admin1@gmail.com,12345,true
+Admin,ASU,admin@gmail.com,12345,true
 Petro,Shopko,teacher1@gmail.com,12345,true
