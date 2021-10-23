@@ -19,6 +19,7 @@ public class Lecture {
     private String name;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private LectureType type;
 
     @Column(name = "external_link")
