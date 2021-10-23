@@ -18,13 +18,6 @@ public class LectureDaoImpl implements LectureDao {
     EntityManager entityManager;
 
     @Override
-    public void createLecture() {
-        Lecture lecture = new Lecture();
-        lecture.setLectureId(3);
-        entityManager.persist(lecture);
-    }
-
-    @Override
     public Lecture getLecture(Integer id) {
         String query= "from lecture where lectureId = ?1";
         TypedQuery<Lecture> typedQuery = entityManager.createQuery(query, Lecture.class);

@@ -59,6 +59,8 @@ public class LecturesController {
     private LectureDTO populateLectures(Lecture lecture) {
         LectureDTO lectureDTO = new LectureDTO();
         lectureDTO.setId(lecture.getLectureId());
+        lectureDTO.setExternalLink(lecture.getExternalLink());
+        lectureDTO.setType(lecture.getType());
         lectureDTO.setLecturerUsername(lecture.getLecturer().getUsername());
         lectureDTO.setOrdinalNumber(lecture.getOrdinalNumber());
         lectureDTO.setName(lecture.getName());

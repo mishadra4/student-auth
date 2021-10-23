@@ -1,12 +1,17 @@
 package com.md.sa.facade.dto;
 
 import com.md.sa.model.Subject;
+import com.md.sa.model.enums.LectureType;
 
 import java.util.List;
 
 public class LectureDTO {
 
     private String name;
+
+    private LectureType type;
+
+    private String externalLink;
 
     private Integer id;
 
@@ -34,6 +39,23 @@ public class LectureDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LectureType getType() {
+        return type;
+    }
+
+    public LectureDTO setType(LectureType type) {
+        this.type = type;
+        return this;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public void setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
     }
 
     public Integer getId() {

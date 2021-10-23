@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.md.sa.model.enums.LectureType;
+
 @Entity(name = "lecture")
 @Table(name = "lecture")
 public class Lecture {
@@ -15,6 +17,12 @@ public class Lecture {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "type")
+    private LectureType type;
+
+    @Column(name = "external_link")
+    private String externalLink;
 
     @Column(name = "ordinal_number")
     private Integer ordinalNumber;
@@ -72,6 +80,24 @@ public class Lecture {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LectureType getType() {
+        return type;
+    }
+
+    public Lecture setType(LectureType type) {
+        this.type = type;
+        return this;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public Lecture setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
+        return this;
     }
 
     public Integer getOrdinalNumber() {

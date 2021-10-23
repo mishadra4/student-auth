@@ -6,7 +6,6 @@ import java.util.List;
 
 
 public interface LectureDao {
-    void createLecture();
 
     Lecture getLecture(Integer id);
 

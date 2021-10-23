@@ -200,5 +200,11 @@
         <sqlFile path="test-db.sql"/>
 
     </changeSet>
+    <changeSet id="2" author="system">
+        <addColumn tableName="lecture">
+            <column name="type" type="varchar(64)"/>
+            <column name="external_link" type="varchar(2048)"/>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

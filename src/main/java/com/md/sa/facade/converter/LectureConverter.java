@@ -44,11 +44,12 @@ public class LectureConverter implements GenericConverter<Lecture, LectureData> 
     @Autowired
     private QrCodeService qrCodeService;
 
-
     @Override
     public Lecture convertToEntity(LectureData dto) {
         Lecture lecture = new Lecture();
         lecture.setName(dto.getName());
+        lecture.setExternalLink(dto.getExternalLink());
+        lecture.setType(dto.getType());
         lecture.setLectureId(dto.getId());
         lecture.setLecturer(lecturerService.getLecturerByUsername(dto.getLecturerUsername()));
         lecture.setOrdinalNumber(dto.getOrdinalNumber());
@@ -70,6 +71,8 @@ public class LectureConverter implements GenericConverter<Lecture, LectureData> 
         dto.setDescription(entity.getDescription());
         dto.setId(entity.getLectureId());
         dto.setName(entity.getName());
+        dto.setExternalLink(entity.getExternalLink());
+        dto.setType(entity.getType());
         dto.setOrdinalNumber(entity.getOrdinalNumber());
 
         dto.setGroups(entity.getGroups().stream()

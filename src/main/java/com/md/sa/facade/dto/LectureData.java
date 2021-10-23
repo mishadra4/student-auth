@@ -3,6 +3,7 @@ package com.md.sa.facade.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.md.sa.model.enums.LectureType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,10 @@ public class LectureData {
     private String filePath;
 
     private String name;
+
+    private LectureType type;
+
+    private String externalLink;
 
     private int id;
 
@@ -99,6 +104,24 @@ public class LectureData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LectureType getType() {
+        return type;
+    }
+
+    public LectureData setType(LectureType type) {
+        this.type = type;
+        return this;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public LectureData setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
+        return this;
     }
 
     public List<StudentData> getStudents() {
