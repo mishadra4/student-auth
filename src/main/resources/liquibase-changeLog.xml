@@ -207,4 +207,24 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="3" author="system">
+        <createTable tableName="lecture_comments">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="content" type="varchar(2048)"/>
+            <column name="publication_date" type="date"/>
+            <column name="username" type="varchar(256)">
+                <constraints foreignKeyName="fk_lecture_comments_to_users" references="users(username)"/>
+            </column>
+            <column name="lecture_id" type="integer">
+                <constraints foreignKeyName="fk_lecture_comments_to_lecture" references="lecture(lecture_id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="system">
+        <modifyDataType tableName="lecture_comments" columnName="publication_date" newDataType="timestamp without timezone"/>
+    </changeSet>
+
 </databaseChangeLog>
