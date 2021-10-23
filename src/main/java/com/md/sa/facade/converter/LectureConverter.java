@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 
 import static org.apache.logging.log4j.util.Strings.EMPTY;
 
+import static com.md.sa.model.enums.LectureType.OFFLINE;
+import static com.md.sa.model.enums.LectureType.ONLINE;
+
 
 @Component
 public class LectureConverter implements GenericConverter<Lecture, LectureData> {
@@ -49,7 +52,7 @@ public class LectureConverter implements GenericConverter<Lecture, LectureData> 
         Lecture lecture = new Lecture();
         lecture.setName(dto.getName());
         lecture.setExternalLink(dto.getExternalLink());
-        lecture.setType(dto.getType());
+        lecture.setType(dto.isOnline() ? ONLINE : OFFLINE);
         lecture.setLectureId(dto.getId());
         lecture.setLecturer(lecturerService.getLecturerByUsername(dto.getLecturerUsername()));
         lecture.setOrdinalNumber(dto.getOrdinalNumber());

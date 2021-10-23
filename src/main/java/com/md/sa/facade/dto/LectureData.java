@@ -37,6 +37,8 @@ public class LectureData {
 
     private LocalDate lectureDate;
 
+    private boolean isOnline;
+
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private LocalDateTime qrCodeEndDate;
@@ -154,5 +156,14 @@ public class LectureData {
 
     public void setQrCodeEndDate(LocalDateTime qrCodeEndDate) {
         this.qrCodeEndDate = qrCodeEndDate;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public LectureData setOnline(boolean online) {
+        isOnline = online;
+        return this;
     }
 }
