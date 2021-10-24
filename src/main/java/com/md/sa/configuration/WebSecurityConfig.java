@@ -24,6 +24,8 @@ import javax.annotation.security.PermitAll;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static java.util.Arrays.asList;
+
 @Configuration
 @EnableWebSecurity
 @PermitAll
@@ -72,11 +74,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.unmodifiableList(Arrays.asList("*")));
-        configuration.setAllowedMethods(Collections.unmodifiableList(Arrays.asList("HEAD",
-                "GET", "POST", "PUT", "DELETE", "PATCH")));
+        configuration.setAllowedOrigins(Collections.unmodifiableList(asList("*")));
+        configuration.setAllowedMethods(Collections.unmodifiableList(asList("*")));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Collections.unmodifiableList(Arrays.asList("Authorization", "Cache-Control", "Content-Type")));
+        configuration.setAllowedHeaders(asList("*"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
