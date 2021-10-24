@@ -3,6 +3,9 @@ package com.md.sa.facade.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.data.util.Pair;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +31,13 @@ public class LectureAttachmentsFacadeImpl implements LectureAttachmentsFacade {
         this.lectureDao = lectureDao;
         this.lectureDocumentRepository = lectureDocumentRepository;
         this.lectureAttachmentsConverter = lectureAttachmentsConverter;
+    }
+
+    @Override
+    public Pair<String, Resource> findOne(Integer lectureId, Long documentId) {
+        LectureDocument document = lectureDocumentRepository.getOne(documentId);
+
+        return Pair.of(document.getName(), new ByteArrayResource(document.getFile()));
     }
 
     @Override
