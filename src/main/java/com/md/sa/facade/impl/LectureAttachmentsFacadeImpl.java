@@ -1,5 +1,8 @@
 package com.md.sa.facade.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.md.sa.dao.LectureDao;
 import com.md.sa.facade.LectureAttachmentsFacade;
 import com.md.sa.facade.converter.LectureAttachmentsConverter;
+import com.md.sa.facade.dto.LectureDocumentInfoData;
 import com.md.sa.model.LectureDocument;
 import com.md.sa.model.User;
 import com.md.sa.repository.LectureDocumentRepository;
@@ -24,6 +28,16 @@ public class LectureAttachmentsFacadeImpl implements LectureAttachmentsFacade {
         this.lectureDao = lectureDao;
         this.lectureDocumentRepository = lectureDocumentRepository;
         this.lectureAttachmentsConverter = lectureAttachmentsConverter;
+    }
+
+    @Override
+    public List<LectureDocumentInfoData> findAll(Integer lectureId) {
+        return lectureDocumentRepository.findAllByLectureId(lectureId)
+                .stream()
+                .map(entity -> new LectureDocumentInfoData()
+                        .setId(entity.getId())
+                        .setName(entity.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
