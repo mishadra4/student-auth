@@ -227,4 +227,22 @@
         <modifyDataType tableName="lecture_comments" columnName="publication_date" newDataType="timestamp without timezone"/>
     </changeSet>
 
+    <changeSet id="5" author="system">
+        <createTable tableName="lecture_documents">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file" type="bytea"/>
+            <column name="lecture_id" type="integer">
+                <constraints foreignKeyName="fk_lecture_comments_to_users" references="lecture(lecture_id)"/>
+            </column>
+            <column name="username" type="varchar(256)">
+                <constraints foreignKeyName="fk_lecture_documents_to_users" references="users(username)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
