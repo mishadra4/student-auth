@@ -23,6 +23,8 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Service
 public class ReportServiceImpl implements ReportService {
     private static final String PRESENT = " ";
@@ -91,7 +93,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String generateReport(final String subjectName, final String filePath) throws IOException {
+    public Workbook generateReport(final String subjectName, HttpServletResponse response) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
 
             Sheet sheet = workbook.createSheet("Список відвідування");
@@ -125,14 +127,9 @@ public class ReportServiceImpl implements ReportService {
                 rowCount++;
             }
 
-            FileOutputStream fileOut = new FileOutputStream(filePath);
-            workbook.write(fileOut);
-            try (BufferedOutputStream bos = new BufferedOutputStream(fileOut)) {
-                bos.flush();
-            }
-            fileOut.close();
+            workbook.write(response.getOutputStream());
+            return workbook;
         }
-        return filePath;
     }
 
     private void createLectureRow(Set<Lecture> lectures, Sheet sheet) {

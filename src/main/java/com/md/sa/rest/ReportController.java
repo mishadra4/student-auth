@@ -1,8 +1,10 @@
 package com.md.sa.rest;
 
 import com.md.sa.service.ReportService;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
+
 @CrossOrigin
 @RestController
 public class ReportController {
@@ -26,23 +31,17 @@ public class ReportController {
 
     @RequestMapping(value = "/app/report/lectures/subject/{subjectName}")
     public void getLectureReport(@PathVariable String subjectName, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        File dir = new File(FILE_PATH);
-        File file = new File(FILE_PATH + subjectName + "_" + FILE_NAME);
+//        File dir = new File(FILE_PATH);
+//        File file = new File(FILE_PATH + subjectName + "_" + FILE_NAME);
 
-        String realPath = file.getCanonicalPath();
+//        String realPath = file.getCanonicalPath();
 
-        if(!file.exists())
-        {
-            dir.mkdir();
-            file.createNewFile();
-        }
+        Workbook workbook = reportService.generateReport(subjectName, response);
 
-        reportService.generateReport(subjectName, realPath);
-
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        try (InputStream is = new FileInputStream(realPath)) {
-            IOUtils.copy(is, response.getOutputStream());
-        }
+//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setContentType(APPLICATION_OCTET_STREAM_VALUE);
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+            String.format("attachment; filename=\"%s\"", subjectName + "_" + FILE_NAME));
         response.flushBuffer();
     }
 

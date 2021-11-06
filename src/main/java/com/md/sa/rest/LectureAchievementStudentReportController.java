@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.md.sa.facade.LectureAchievementStudentReportFacade;
 import com.md.sa.facade.dto.LectureAchievementStudentReportData;
 
-@Controller
+@RestController
 @RequestMapping("/lectures/{lecture_id}/achievements")
 public class LectureAchievementStudentReportController {
 

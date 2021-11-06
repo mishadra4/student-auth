@@ -5,6 +5,8 @@ import com.md.sa.model.Groups;
 import com.md.sa.model.Lecture;
 import com.md.sa.model.Student;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,6 +44,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Lecture saveLecture(Lecture lecture) {
         return entityManager.merge(lecture);
     }
