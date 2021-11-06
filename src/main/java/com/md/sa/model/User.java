@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +39,10 @@ public class User implements UserDetails {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @ManyToOne
+    @JoinColumn(name = "group_group_id")
+    private Groups group;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -108,6 +113,15 @@ public class User implements UserDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Groups getGroup() {
+        return group;
+    }
+
+    public User setGroup(Groups group) {
+        this.group = group;
+        return this;
     }
 
     @Override

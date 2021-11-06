@@ -4,7 +4,11 @@ public class LectureAchievementStudentReportData {
 
     private Integer id;
 
-    private String fullName;
+    private String groupName;
+
+    private String firstName;
+
+    private String lastName;
 
     private Integer grade;
 
@@ -19,12 +23,30 @@ public class LectureAchievementStudentReportData {
         return this;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public LectureAchievementStudentReportData setFullName(String fullName) {
-        this.fullName = fullName;
+    public LectureAchievementStudentReportData setGroupName(String groupName) {
+        this.groupName = groupName;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public LectureAchievementStudentReportData setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public LectureAchievementStudentReportData setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
 

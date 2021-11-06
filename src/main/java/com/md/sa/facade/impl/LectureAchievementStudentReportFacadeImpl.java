@@ -5,13 +5,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.md.sa.facade.LectureAchievementStudentReportFacade;
 import com.md.sa.facade.converter.LectureAchievementStudentReportConverter;
 import com.md.sa.facade.dto.LectureAchievementStudentReportData;
 import com.md.sa.model.LectureAchievementStudentReport;
 import com.md.sa.repository.LectureAchievementStudentReportRepository;
-
 
 @Component
 public class LectureAchievementStudentReportFacadeImpl implements LectureAchievementStudentReportFacade {
@@ -27,6 +27,7 @@ public class LectureAchievementStudentReportFacadeImpl implements LectureAchieve
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LectureAchievementStudentReportData> findAllByLecture(Integer lectureId) {
         return repository.findAllByLectureId(lectureId)
                 .stream()
@@ -35,6 +36,7 @@ public class LectureAchievementStudentReportFacadeImpl implements LectureAchieve
     }
 
     @Override
+    @Transactional
     public LectureAchievementStudentReportData update(Integer lectureId, Integer achievementId, LectureAchievementStudentReportData record) {
         Optional<LectureAchievementStudentReport> lectureAchievementStudentReportOpt = repository.findById(achievementId);
         if (lectureAchievementStudentReportOpt.isPresent()) {
