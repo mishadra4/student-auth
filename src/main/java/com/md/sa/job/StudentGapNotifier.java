@@ -18,8 +18,6 @@ import static java.lang.String.format;
 @Component
 public class StudentGapNotifier {
 
-    private static final Integer ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
-
     private static final String MESSAGE = "Ти був відсутній на таких лекціях більше трьох разів: %s , звʼяжись з викладачем, щоб тебе не відрахували";
     private static final String SUBJECT = "Нагадування про погане відвідування";
     @Autowired
@@ -29,7 +27,7 @@ public class StudentGapNotifier {
     @Autowired
     private SubjectRepository subjectRepository;
 
-    @Scheduled(fixedRate = ONE_WEEK)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 24 * 7) //one week
     public void notifyStudents() {
         studentRepository.findAll().stream()
             .map(User::getUsername)
