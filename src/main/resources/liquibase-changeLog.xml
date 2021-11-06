@@ -261,4 +261,20 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="7" author="system">
+        <createTable tableName="lab_achievement_student_reports">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="grade" type="integer"/>
+            <column name="present" type="boolean"/>
+            <column name="lecture_id" type="integer">
+                <constraints foreignKeyName="fk_journal_to_lab" references="lab(lab_id)"/>
+            </column>
+            <column name="username" type="varchar(256)">
+                <constraints foreignKeyName="fk_journals_to_users" references="users(username)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

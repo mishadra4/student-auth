@@ -5,22 +5,21 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.md.sa.facade.dto.LectureAchievementStudentReportData;
-import com.md.sa.model.LectureAchievementStudentReport;
+import com.md.sa.facade.dto.LabAchievementStudentReportData;
+import com.md.sa.model.LabAchievementStudentReport;
 import com.md.sa.model.User;
 
 @Component
-public class LectureAchievementStudentReportConverter
-        implements GenericConverter<LectureAchievementStudentReport, LectureAchievementStudentReportData> {
+public class LabAchievementStudentReportConverter implements GenericConverter<LabAchievementStudentReport, LabAchievementStudentReportData>{
 
     @Override
-    public LectureAchievementStudentReport convertToEntity(LectureAchievementStudentReportData dto) {
+    public LabAchievementStudentReport convertToEntity(LabAchievementStudentReportData dto) {
         throw new UnsupportedOperationException("No operation");
     }
 
     @Override
-    public LectureAchievementStudentReportData convertToDTO(LectureAchievementStudentReport entity) {
-        LectureAchievementStudentReportData dto = new LectureAchievementStudentReportData();
+    public LabAchievementStudentReportData convertToDTO(LabAchievementStudentReport entity) {
+        LabAchievementStudentReportData dto = new LabAchievementStudentReportData();
         dto.setId(entity.getId());
         dto.setGrade(entity.getGrade());
 
