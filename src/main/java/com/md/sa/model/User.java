@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "group_group_id")
+    @JoinColumn(name = "group_group_id", insertable = false, updatable = false)
     private Groups group;
 
     @ManyToMany(fetch = FetchType.LAZY)

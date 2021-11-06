@@ -4,6 +4,8 @@ public class LectureAchievementStudentReportData {
 
     private Integer id;
 
+    private String username;
+
     private String groupName;
 
     private String firstName;
@@ -20,6 +22,15 @@ public class LectureAchievementStudentReportData {
 
     public LectureAchievementStudentReportData setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public LectureAchievementStudentReportData setUsername(String username) {
+        this.username = username;
         return this;
     }
 

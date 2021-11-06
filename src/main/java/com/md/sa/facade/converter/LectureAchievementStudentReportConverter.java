@@ -25,6 +25,7 @@ public class LectureAchievementStudentReportConverter
         dto.setGrade(entity.getGrade());
 
         User user = entity.getUser();
+        dto.setUsername(user.getUsername());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
 
