@@ -277,4 +277,23 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="8" author="system">
+        <addColumn tableName="lab">
+            <column name="pass_in_minutes" type="integer"/>
+            <column name="minutes_per_student" type="integer"/>
+        </addColumn>
+        
+        <createTable tableName="student_pass_in_orders">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar">
+                <constraints foreignKeyName="fk_student_pass_in_order_to_users" references="users(username)"/>
+            </column>
+            <column name="lab_id" type="integer">
+                <constraints foreignKeyName="fk_student_pass_in_order_to_lab" references="lab(lab_id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
